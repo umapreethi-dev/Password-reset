@@ -28,6 +28,19 @@ app.post("/sign_up", async function (req, res) {
     });
   res.send(result);
 });
+
+app.get("/password-reset", async function(req,res){
+  const userName = req.body;
+  const passResult = await client
+  .db("test")
+  .collection("pass-reset")
+  .findOne(userName, function (err, collection) {
+    if (err) throw err;
+    console.log("Record found");
+  });
+  passResult ? res.send("Successfully found the username") : res.send("Type correct username");
+})
+
 app.listen(PORT, function () {
   console.log("Listening on:", PORT);
 });
